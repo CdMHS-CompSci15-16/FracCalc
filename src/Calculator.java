@@ -1,9 +1,11 @@
-public class Calculator {
-	Frac add(Frac f1, Frac f2){//NOT YET FINISHED
-		int[] info=new int[3];
-		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);
-		int finalNumerator=info[1]+info[2];
-		Frac finalFrac = new Frac(finalNumerator,info[0]);
+//By Ryan Chan
+//AP Computer Science 2015
+public class Calculator {//Class for performing mathematical operations to fractions
+	Frac add(Frac f1, Frac f2){//Addition class
+		int[] info=new int[3];//Creates an array in order to receive data from the matchDenominator method
+		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);//Gets new fraction data with matching denominator from the matchDenominator method
+		int finalNumerator=info[1]+info[2];//Adds the two numerators
+		Frac finalFrac = new Frac(finalNumerator,info[0]);//Creates
 		return finalFrac;
 	}
 	Frac subtract(Frac f1, Frac f2){
