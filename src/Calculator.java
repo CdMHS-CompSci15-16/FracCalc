@@ -1,5 +1,5 @@
 //By Ryan Chan
-//AP Computer Science 2015
+//CDM AP Computer Science 2015
 public class Calculator {							//Class for performing mathematical operations to fractions
 	Frac add(Frac f1, Frac f2){						//Addition class
 		int[] info=new int[3];						//Creates an array in order to receive data from the matchDenominator method
@@ -49,7 +49,7 @@ public class Calculator {							//Class for performing mathematical operations t
 		int multiple=gcd(frac.getNumerator(),frac.getDenominator());	//Finds gcd between numerator and denominator
 		int finalNumerator=frac.getNumerator()/multiple;				//Divides both numerator by GCD
 		int finalDenominator=frac.getDenominator()/multiple;			//Divides denominator by GCD
-		Frac finalFrac=new Frac(finalNumerator,finalDenominator);
-		return finalFrac;
+		Frac finalFrac=new Frac(finalNumerator,finalDenominator);		//Creates new Frac object with new numerator and denominator
+		return finalFrac;							//Returns the simplified fraction
 	}
 }

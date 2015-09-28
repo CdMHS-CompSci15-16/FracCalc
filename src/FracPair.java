@@ -1,4 +1,5 @@
 //By Ryan Chan
+//CDM AP Computer Science 2015
 
 //This class exists for the sole purpose of holding two Frac objects and an operation.
 //This is used to return input data to the main method

@@ -1,6 +1,6 @@
-//By Ryan Chan
 //Fraction Calculator
-//CDM AP Computer Science, 2015
+//By Ryan Chan
+//CDM AP Computer Science 2015
 import java.util.Scanner; 								//Imports the Scanner class, used for user input
 
 public class MainCalc {

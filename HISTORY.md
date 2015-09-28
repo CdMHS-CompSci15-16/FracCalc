@@ -4,5 +4,6 @@
 
 *First Release
 
+##1.0.0a (9-28-2015)
 
-aaaaa
+*Comments cleaned up and updated
