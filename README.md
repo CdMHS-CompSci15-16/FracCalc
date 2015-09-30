@@ -7,4 +7,4 @@ Feel free to examine my code and take inspiration from it, but if you copy/paste
 Feel free to contact me if you have any questions about my code.
 
 
-Got f*cking dammit I've got to rewrite all my code, since apparently we're not allowed to use objects
+God dammit I've got to rewrite all my code, since apparently we're not allowed to use objects
