@@ -1,5 +1,9 @@
 #Version History
 
+##1.1.1 (10-21-2015)
+
+*Fixed bug in order of operations. Equivelant operations, such as addition and subtraction, will now be performed from left to right. Previously, addition would always go first, then subtraction.
+
 ##1.1.0 (10-20-2015)
 
 *Almost completely rewritten

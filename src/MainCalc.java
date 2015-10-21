@@ -4,7 +4,7 @@
 import java.util.*;
 
 public class MainCalc {
-	final static boolean SHOW_PROCESS = false; // Toggle this to display each
+	final static boolean SHOW_PROCESS = true; // Toggle this to display each
 												// step of the solving process.
 												// This will have no effect on
 												// the resulting answer.
@@ -44,12 +44,12 @@ public class MainCalc {
 
 		if (input.indexOf("+") != -1) {
 			operatorPos = input.indexOf("+");
-		} else if (input.indexOf("-") != -1) {
-			operatorPos = input.indexOf("-");
+		} else if (input.indexOf("- ") != -1) {
+			operatorPos = input.indexOf("- ");
 		} else if (input.indexOf("*") != -1) {
 			operatorPos = input.indexOf("*");
 		} else {
-			operatorPos = input.indexOf("/", input.indexOf("/") + 1);
+			operatorPos = input.indexOf("/ ");
 		}
 
 		if (input.lastIndexOf("_", operatorPos) != -1) {
@@ -57,7 +57,7 @@ public class MainCalc {
 			temp = input.substring(0, underscorePos);
 			frac1.setCoefficient(Integer.parseInt(temp));
 		}
-		if (input.lastIndexOf("/", operatorPos) != -1) {
+		if (input.lastIndexOf("/", operatorPos-1) != -1) {
 			slashPos = input.lastIndexOf("/", operatorPos - 1);
 			if (input.lastIndexOf("_", operatorPos) != -1) {
 				temp = input.substring(underscorePos + 1, slashPos);
@@ -95,7 +95,7 @@ public class MainCalc {
 		frac2.convertToImproper();
 		if (input.indexOf("+") != -1) {
 			finalFrac = calc.add(frac1, frac2);
-		} else if (input.indexOf("-") != -1) {
+		} else if (input.indexOf("- ") != -1) {
 			finalFrac = calc.subtract(frac1, frac2);
 		} else if (input.indexOf("*") != -1) {
 			finalFrac = calc.multiply(frac1, frac2);
@@ -115,14 +115,22 @@ public class MainCalc {
 		Frac combinedFrac = new Frac(0, 0, 1);
 
 		while (input.indexOf(" ") != -1) {
-			if (input.indexOf("*") != -1) {
-				operatorPos = input.indexOf("*");
-			} else if (input.indexOf("/ ") != -1) {
-				operatorPos = input.indexOf("/ ");
-			} else if (input.indexOf("+") != -1) {
-				operatorPos = input.indexOf("+ ");
-			} else if (input.indexOf("-") != -1) {
-				operatorPos = input.indexOf("-");
+			if ((input.indexOf("*") != -1)||(input.indexOf("/ ") != -1)) {
+				if ((input.indexOf("*")!=-1)&&input.indexOf("/ ")!=-1){
+					operatorPos = Math.min(input.indexOf("*"),input.indexOf("/ "));
+				} else if ((input.indexOf("*")!=-1)&&input.indexOf("/ ")==-1){
+					operatorPos = input.indexOf("*");
+				} else if ((input.indexOf("*")==-1)&&input.indexOf("/ ")!=-1){
+					operatorPos=input.indexOf("/ ");
+				}
+			} else if ((input.indexOf("+") != -1)||(input.indexOf("- ") != -1)) {
+				if ((input.indexOf("+")!=-1)&&input.indexOf("- ")!=-1){
+					operatorPos = Math.min(input.indexOf("+"),input.indexOf("- "));
+				} else if ((input.indexOf("+")!=-1)&&input.indexOf("- ")==-1){
+					operatorPos = input.indexOf("+");
+				} else if ((input.indexOf("+")==-1)&&input.indexOf("- ")!=-1){
+					operatorPos=input.indexOf("- ");
+				}
 			}
 
 			if (input.lastIndexOf(" ", operatorPos - 2) != -1) {
