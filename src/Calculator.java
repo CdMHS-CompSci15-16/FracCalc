@@ -5,23 +5,23 @@ public class Calculator {							//Class for performing mathematical operations t
 		int[] info=new int[3];						//Creates an array in order to receive data from the matchDenominator method
 		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);	//Gets new fraction data with matching denominator from the matchDenominator method
 		int finalNumerator=info[1]+info[2];			//Adds the two numerators
-		Frac finalFrac = new Frac(finalNumerator,info[0]);		//Creates a Frac object containing the sum of the two fractions
+		Frac finalFrac = new Frac(0,finalNumerator,info[0]);		//Creates a Frac object containing the sum of the two fractions
 		return finalFrac;							//Returns final Frac object
 	}
 	Frac subtract(Frac f1, Frac f2){				//Subtraction class
 		int[] info=new int[3];						//Creates an array in order to receive data from the matchDenominator method
 		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);	//Gets new fraction data with matching denominator from the matchDenominator method
 		int finalNumerator=info[1]-info[2];			//Subtracts the two numerators
-		Frac finalFrac = new Frac(finalNumerator,info[0]);		//Creates a Frac object containing the difference of the two fractions
+		Frac finalFrac = new Frac(0,finalNumerator,info[0]);		//Creates a Frac object containing the difference of the two fractions
 		return finalFrac;							//Returns final Frac object
 	}
 
 	Frac multiply(Frac f1, Frac f2){				//Multiplication class
-		Frac finalFrac = new Frac(f1.getNumerator()*f2.getNumerator(),f1.getDenominator()*f2.getDenominator());	//Multiplies the numerators and denominators of the two fractions
+		Frac finalFrac = new Frac(0,f1.getNumerator()*f2.getNumerator(),f1.getDenominator()*f2.getDenominator());	//Multiplies the numerators and denominators of the two fractions
 		return finalFrac;							//Returns final Frac object
 	}
 	Frac divide(Frac f1, Frac f2){					//Division class
-		Frac finalFrac = new Frac(f1.getNumerator()*f2.getDenominator(),f1.getDenominator()*f2.getNumerator());	//Divides the two fractions
+		Frac finalFrac = new Frac(0,f1.getNumerator()*f2.getDenominator(),f1.getDenominator()*f2.getNumerator());	//Divides the two fractions
 		return finalFrac;							//Returns the final Frac object
 	}
 	private int gcd(int n1, int n2){				//Class for finding greatest common denominator of two ints
@@ -49,7 +49,7 @@ public class Calculator {							//Class for performing mathematical operations t
 		int multiple=gcd(frac.getNumerator(),frac.getDenominator());	//Finds gcd between numerator and denominator
 		int finalNumerator=frac.getNumerator()/multiple;				//Divides both numerator by GCD
 		int finalDenominator=frac.getDenominator()/multiple;			//Divides denominator by GCD
-		Frac finalFrac=new Frac(finalNumerator,finalDenominator);		//Creates new Frac object with new numerator and denominator
+		Frac finalFrac=new Frac(0,finalNumerator,finalDenominator);		//Creates new Frac object with new numerator and denominator
 		return finalFrac;							//Returns the simplified fraction
 	}
 }

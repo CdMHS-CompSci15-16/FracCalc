@@ -8,7 +8,7 @@ This program is a fraction calculator. Input must be formatted correctly. Exampl
 
 Is equivelant to 3.5 + 0.5 + 4, and will produce a result of 8.
 
-There is no limit on the number of fractions that can be entered in a single statement. When more than 2 terms are entered in a single statement, they will be solved using standard order of operations. (Parentheses not currently supported)
+There is no limit on the number of fractions that can be entered in a single statement. When more than 2 terms are entered in a single statement, they will be solved using standard order of operations.
 
 Feel free to examine my code and take inspiration from it, but if you copy/paste it directly and get me in trouble, I will hunt you down and destroy your computer with a sledgehammer.
 
