@@ -1,55 +1,200 @@
-//By Ryan Chan
-//CDM AP Computer Science 2015
-public class Calculator {							//Class for performing mathematical operations to fractions
-	Frac add(Frac f1, Frac f2){						//Addition class
-		int[] info=new int[3];						//Creates an array in order to receive data from the matchDenominator method
-		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);	//Gets new fraction data with matching denominator from the matchDenominator method
-		int finalNumerator=info[1]+info[2];			//Adds the two numerators
-		Frac finalFrac = new Frac(0,finalNumerator,info[0]);		//Creates a Frac object containing the sum of the two fractions
-		return finalFrac;							//Returns final Frac object
-	}
-	Frac subtract(Frac f1, Frac f2){				//Subtraction class
-		int[] info=new int[3];						//Creates an array in order to receive data from the matchDenominator method
-		System.arraycopy(matchDenominator(f1,f2),0,info,0,3);	//Gets new fraction data with matching denominator from the matchDenominator method
-		int finalNumerator=info[1]-info[2];			//Subtracts the two numerators
-		Frac finalFrac = new Frac(0,finalNumerator,info[0]);		//Creates a Frac object containing the difference of the two fractions
-		return finalFrac;							//Returns final Frac object
-	}
+import java.util.Scanner;
 
-	Frac multiply(Frac f1, Frac f2){				//Multiplication class
-		Frac finalFrac = new Frac(0,f1.getNumerator()*f2.getNumerator(),f1.getDenominator()*f2.getDenominator());	//Multiplies the numerators and denominators of the two fractions
-		return finalFrac;							//Returns final Frac object
+public class Calculator {
+	public static void main(String[] args) {
+		System.out.println("Welcome to Fraction Calculator!");
+		System.out.println("Written by Ryan Chan, by CDM AP Computer Science 2015");
+		System.out.println("Standard edition");
+		Scanner sc = new Scanner(System.in);
+		String input;
+		boolean continueLoop = true;
+		while (continueLoop) {	//Loops the program until the user enters "quit"
+			System.out.println("Please enter an expression, or enter \"quit\" to quit: ");
+			input = sc.nextLine();	//Takes user input
+			if (input.equals("quit") || input.equals("Quit")) { //If user enters "quit", the program will exit
+				continueLoop = false;
+				System.out.println("Thank you for using Fraction Calculator, have a nice day!");
+			} else {
+				System.out.println(operate(input)); //Calls the operate method, which will perform all necessary operations within the string. This value is then printed
+			}
+		}
+		sc.close();
 	}
-	Frac divide(Frac f1, Frac f2){					//Division class
-		Frac finalFrac = new Frac(0,f1.getNumerator()*f2.getDenominator(),f1.getDenominator()*f2.getNumerator());	//Divides the two fractions
-		return finalFrac;							//Returns the final Frac object
+	public static String operate(String input) {
+		//Initializes variables for two fractions. Each fraction has a variable for its coefficient, numerator, and denominator
+		int f1c=0;	//Coefficient
+		int f1n=0;	//Numerator
+		int f1d=1;	//Denominator
+		
+		int f2c=0;
+		int f2n=0;
+		int f2d=1;
+		String temp;
+		String result = null;
+		int operatorPos = 0;
+		int underscorePos = 0;
+		int slashPos = 0;
+
+		if (input.indexOf("+") != -1) {		//Finds the location of the operator and stores its position.
+			operatorPos = input.indexOf("+");
+		} else if (input.indexOf("- ") != -1) {
+			operatorPos = input.indexOf("- ");
+		} else if (input.indexOf("*") != -1) {
+			operatorPos = input.indexOf("*");
+		} else {
+			operatorPos = input.indexOf("/ ");
+		}
+
+		if (input.lastIndexOf("_",  operatorPos) != -1) {	//If the first term is a mixed number, finds the coefficient
+			underscorePos = input.lastIndexOf("_",  operatorPos);
+			temp = input.substring(0,  underscorePos);	//Coefficient is located based on position of "_"
+			f1c=(Integer.parseInt(temp));
+		}
+		if (input.lastIndexOf("/",  operatorPos-1) != -1) {	//If the first term contains a "/", and is therefore a fraction, finds the numerator and denominator
+			slashPos = input.lastIndexOf("/",  operatorPos - 1);	//Finds position of "/"
+			if (input.lastIndexOf("_",  operatorPos) != -1) {		//If the fraction has a coefficient, numerator is taken as the string between "_" and "/"
+				temp = input.substring(underscorePos + 1,  slashPos);
+			} else {
+				temp = input.substring(0,  slashPos);	//If there is no coefficient, string is taken from index 0 to the "/"
+			}
+			f1n=(Integer.parseInt(temp));
+			
+			temp = input.substring(slashPos + 1,  operatorPos - 1);	//Denominator is taken as the string between "/" and operator
+			f1d=(Integer.parseInt(temp));
+		} else {
+			temp = input.substring(0,  operatorPos - 1);	//If there is no fraction, then the whole number is stored as a coefficient
+			f1c=(Integer.parseInt(temp));
+		}
+
+		if (input.indexOf("_",  operatorPos) != -1) {	//If the second term is a mixed number, finds the coefficient
+			underscorePos = input.indexOf("_",  operatorPos);//Coefficient is located based on position of "_"
+			temp = input.substring(operatorPos + 2,  underscorePos);
+			f2c=(Integer.parseInt(temp));
+		}
+		if (input.indexOf("/",  operatorPos + 1) != -1) {	//If the second term contains a "/", and is therefore a fraction, finds the numerator and denominator
+			slashPos = input.indexOf("/",  operatorPos + 1);	//Finds position of "/"
+			if (input.indexOf("_",  operatorPos) != -1) {	//If the fraction has a coefficient, numerator is taken as the string between "_" and "/"
+				temp = input.substring(underscorePos + 1,  slashPos);
+			} else {
+				temp = input.substring(operatorPos + 2,  slashPos);	//If there is no coefficient, string is taken from operator index to the "/"
+			}
+			f2n=(Integer.parseInt(temp));
+			
+			temp = input.substring(slashPos + 1);	//Denominator is taken as the string between "/" and operator
+			f2d=(Integer.parseInt(temp));
+		} else {
+			temp = input.substring(operatorPos + 2);	//If there is no fraction, then the whole number is stored as a coefficient
+			f2c=(Integer.parseInt(temp));
+		}
+		//Converts fraction from a mixed number to an inproper fraction
+		f1n = f1n + (f1c * f1d);
+		f1c = 0;
+		f2n = f2n + (f2c * f2d);
+		f2c = 0;
+		
+		if (input.indexOf("+") != -1) {	//Calls relevant arithmetic method depending on the operator
+			result = add(f1n,f1d,f2n,f2d);
+		} else if (input.indexOf("- ") != -1) {
+			result = subtract(f1n,f1d,f2n,f2d);
+		} else if (input.indexOf("*") != -1) {
+			result = multiply(f1n,f1d,f2n,f2d);
+		} else if (input.indexOf("/ ") != -1) {
+			result = divide(f1n,f1d,f2n,f2d);
+		} else {
+			System.out.println("Error! Operator not present");
+		}
+		return result;
 	}
-	private int gcd(int n1, int n2){				//Class for finding greatest common denominator of two ints
+	public static String add(int f1n, int f1d, int f2n, int f2d){	
+		String result;
+		int f3n=matchDenominator(f1n,f1d,f2n,f2d,"f1n")+matchDenominator(f1n,f1d,f2n,f2d,"f2n");	//Multiplies each fraction by a constant so that they have equal denominators, then adds the numerators
+		int f3d=matchDenominator(f1n,f1d,f2n,f2d,"denominator");	//Sets the denominator of the result to the equal denominator of both fraction inputs
+		result=convertToMixed(f3n,f3d);	//Converts the resulting fraction to a mixed number
+		return result;
+	}
+	public static String subtract(int f1n, int f1d, int f2n, int f2d){
+		String result;
+		int f3n=matchDenominator(f1n,f1d,f2n,f2d,"f1n")-matchDenominator(f1n,f1d,f2n,f2d,"f2n");	//Multiplies each fraction by a constant so that they have equal denominators, then subtracts the numerators
+		int f3d=matchDenominator(f1n,f1d,f2n,f2d,"denominator");	//Sets the denominator of the result to the equal denominator of both fraction inputs
+		result=convertToMixed(f3n,f3d);	//Converts the resulting fraction to a mixed number
+		return result;
+	}
+	public static String multiply(int f1n, int f1d, int f2n, int f2d){
+		String result;
+		int f3n=f1n*f2n;//Multiplies the numerators
+		int f3d=f1d*f2d;//Multiplies the denominators
+		result = convertToMixed(f3n,f3d);	//Converts the resulting fraction to a mixed number
+		return result;
+}
+	public static String divide(int f1n, int f1d, int f2n, int f2d){
+		String result;
+		if (f2n==0||f2d==0){
+			result = "Error:Divide_By_Zero";
+		} else {
+			int f3n=f1n*f2d;//Multiplies the first fraction by the inverse of the second
+			int f3d=f1d*f2n;		
+			result = convertToMixed(f3n,f3d);	//Converts the resulting fraction to a mixed number
+		}
+		return result;
+}
+	public static String convertToMixed(int numPreliminary, int denPreliminary){	//Creates a mixed number from an improper fraction
+		int coefficient = numPreliminary / denPreliminary;	//Finds coefficient
+		int numerator = simplify(numPreliminary,denPreliminary,"numerator");	//Simplifies numerator and denominator
+		int denominator = simplify(numPreliminary,denPreliminary,"denominator");
+		if (numerator<0&&coefficient<0){
+			numerator=numerator*-1;
+		}
+		numerator = numerator % denominator;	//Sets numerator as remainder 
+		if (coefficient == 0 && numerator == 0) {	//If the fraction is 0, returns 0
+			return "0";
+		} else if (coefficient == 0) {	//If the coefficient is 0, only the fraction is returned
+			return numerator + "/" + denominator;
+		} else if (numerator == 0) {	//If the numerator is 0, only the coefficient is returned
+			return Integer.toString(coefficient);
+		} else {	//If there is both a coefficient and a fraction, returns both
+			return coefficient + "_" + numerator + "/" + denominator;
+		}
+	}
+	public static int simplify(int numerator, int denominator, String slot){
+		int multiple = gcf(Math.abs(numerator),Math.abs(denominator));	//Finds gcf of numerator and denominator
+		numerator = numerator/multiple;	
+		denominator = denominator/multiple;
+		if (slot.equals("numerator")){	//Returns numerator if requested
+			return numerator;
+		} else if (slot.equals("denominator")){	//Returns denominator if requested
+			return denominator;	
+		} else{
+			return 1241412; //This is just for debugging; it should never actually happen
+		}
+	}
+	public static int gcf(int n1, int n2){				//Class for finding greatest common denominator of two ints
 		while (n2>0){								//Loop for finding GCD
-			int placeholder=n2;
+			int temp=n2;
 			n2=n1%n2;
-			n1=placeholder;
+			n1=temp;
 		}
 		return n1;									//Returns GCD as integer
 	}
-	private int lcm(int n1, int n2){				//Class for finding LCM of two integers
-		int lcmresult= n1*(n2/gcd(n1,n2));			//Finds LCM using the GCD method
-		return lcmresult;							//Returns LCM as integer
+	public static int lcm(int n1, int n2){				//Class for finding LCM of two integers
+		int lcmResult= n1*(n2/gcf(n1,n2));			//Finds LCM using the GCD method
+		return lcmResult;							//Returns LCM as integer
 	}
-	int[] matchDenominator(Frac f1, Frac f2){		//Class for setting the denominators of two fracions equal
-		int[] infoArray=new int[3];					//Array for holding shared denominator and the new numerators for each fraction
-		infoArray[0]=lcm(f1.getDenominator(),f2.getDenominator());	//Finds common denominator by finding LCM between the two original denominators
-		int multiple1=infoArray[0]/f1.getDenominator();	//Finds the multiple needed for converting the numerator of the first fraction
-		int multiple2=infoArray[0]/f2.getDenominator();	//Finds the multiple needed for converting the numerator of the second fraction
-		infoArray[1]=multiple1*f1.getNumerator();		//Multiplies original numerator of fraction 1 by the multiple in order to find the new numerator
-		infoArray[2]=multiple2*f2.getNumerator();		//Multiplies original numerator of fraction 2 by the multiple in order to find the new numerator
-		return infoArray;							//Returns new denominator and two new numerators in an array
-	}
-	Frac simplify(Frac frac){						//Class for simplifying fractions
-		int multiple=gcd(frac.getNumerator(),frac.getDenominator());	//Finds gcd between numerator and denominator
-		int finalNumerator=frac.getNumerator()/multiple;				//Divides both numerator by GCD
-		int finalDenominator=frac.getDenominator()/multiple;			//Divides denominator by GCD
-		Frac finalFrac=new Frac(0,finalNumerator,finalDenominator);		//Creates new Frac object with new numerator and denominator
-		return finalFrac;							//Returns the simplified fraction
+	public static int matchDenominator(int f1n, int f1d, int f2n, int f2d, String placeToReturn){	//Matches the denominators of two fractions by multiplying by constants, then the requested number is returned
+		int newDenominator= lcm(f1d,f2d);	//New denominator is the LCM of the two
+		int multiple1 = newDenominator/f1d;	//Finds constant for fraction 1
+		int multiple2 = newDenominator/f2d;	//Finds constant for fraction 2
+		int f1NewNumerator=multiple1*f1n;	//Finds new numerator for fraction 1 by multiplying by the previously found constant
+		int f2NewNumerator=multiple2*f2n;	//Finds new numerator for fraction 2 by multiplying by the previously found constant
+		
+		if (placeToReturn.equals("f1n")){	//Returns information based on method parameters
+			return f1NewNumerator;
+		} else if (placeToReturn.equals("f2n")){
+			return f2NewNumerator;
+		} else if (placeToReturn.equals("denominator")){
+			return newDenominator;
+		}
+		else {
+			return -1;
+		}
 	}
 }

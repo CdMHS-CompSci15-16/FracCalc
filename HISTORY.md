@@ -1,5 +1,8 @@
 #Version History
 
+##1.2.0 (11-11-2015)
+*Rewritten to remove all arrays, extra classes, and other unapproved code. Everything has been placed into a single class now.
+
 ##1.1.1 (10-21-2015)
 
 *Fixed bug in order of operations. Equivelant operations, such as addition and subtraction, will now be performed from left to right. Previously, addition would always go first, then subtraction.
