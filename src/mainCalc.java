@@ -1,3 +1,5 @@
+//By Ryan Chan
+//AP Computer Science 2015
 import java.util.Scanner;
 
 public class mainCalc {
